@@ -20,8 +20,6 @@ if (!defined('VCFF_CHALLENGE_DIR'))
 if (!defined('VCFF_CHALLENGE_URL'))
 { define('VCFF_CHALLENGE_URL',untrailingslashit( plugins_url( '/', __FILE__ ) )); }
 
-define('VCFF_CHALLENGE_SQL_VERSION','0.0.1');
-
 class VCFF_Challenge {
     
     public function Init() {
@@ -31,6 +29,8 @@ class VCFF_Challenge {
         require_once(VCFF_CHALLENGE_DIR.'/functions.php');
         // Load helper classes
         $this->_Load_Helpers();
+        // Load core classes
+        $this->_Load_Core();
         // Load the event classes
         $this->_Load_Context();
         // Load the pages
@@ -61,6 +61,24 @@ class VCFF_Challenge {
         }
         // Fire the shortcode init action
         do_action('vcff_challenge_helper_init',$this);
+    }
+    
+    protected function _Load_Core() {
+        // Retrieve the context director
+        $dir = untrailingslashit( plugin_dir_path(__FILE__ ) );
+        // Load each of the field shortcodes
+        foreach (new DirectoryIterator($dir.'/core') as $FileInfo) { 
+            // If this is a directory dot
+            if($FileInfo->isDot()) { continue; }
+            // If this is a directory
+            if($FileInfo->isDir()) { continue; }
+            // If this is not false
+            if (stripos($FileInfo->getFilename(),'.tpl') !== false) { continue; } 
+            // Include the file
+            require_once($FileInfo->getPathname());
+        }
+        // Fire the shortcode init action
+        do_action('vcff_challenge_core_init',$this);
     }
     
     protected function _Load_Context() {

@@ -1,0 +1,34 @@
+New Fields
+- Single Choice From List/Dropdown
+- Multiple Choice From List
+- Essay Question
+- Short Answer
+- Matching
+- Fill in the blanks
+
+Field Params
+- Question
+- Options(s)
+- Randomise Options
+- Answer(s) <-- Self Marking
+- Points
+- Correct Answer Message
+- Incorrect Answer Message
+
+New Form
+- Basic Challenge
+
+Form Params
+- Automark y/n
+- Number Questions
+- Max Attempts
+- Display Results y/n
+- Randomise Questions
+
+New Supports
+- Quiz Message (passed,failed)
+
+Trigger
+- Based on the quiz mark
+
+# If reports module, then add some features
