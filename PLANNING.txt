@@ -1,19 +1,19 @@
 New Fields
-- Single Choice From List/Dropdown
-- Multiple Choice From List
-- Essay Question
-- Short Answer
-- Matching
-- Fill in the blanks
+- Single Choice From List/Dropdown <- DONE
+- Multiple Choice From List <- DONE
+- Essay Question <- DONE
+- Short Answer <- DONE
+- Matching <- DONE
+- Fill in the blanks <- DONE
 
 Field Params
-- Question
-- Options(s)
-- Randomise Options
-- Answer(s) <-- Self Marking
-- Points
-- Correct Answer Message
-- Incorrect Answer Message
+- Question <-- DONE
+- Options(s) <-- DONE
+- Randomise Options <-- DONE
+- Answer(s) <-- DONE
+- Points <-- DONE
+- Correct Answer Message <-- DONE
+- Incorrect Answer Message <-- DONE
 
 New Form
 - Basic Challenge
@@ -24,11 +24,29 @@ Form Params
 - Max Attempts
 - Display Results y/n
 - Randomise Questions
+- Passing Mark
+- Time Limit
+
+New Containers
+- Question Group
+
+Question Group Params
+- Number of questions to show
+- Randomise
+- Allow repeat answering
+- Always show question(s)...
 
 New Supports
 - Quiz Message (passed,failed)
+- Quiz Summary/Progress
 
 Trigger
 - Based on the quiz mark
 
-# If reports module, then add some features
+# IF REPORTS MODULE
+
+Form Params
+- Enable Save & Continue
+
+New Pages
+- Marking Page

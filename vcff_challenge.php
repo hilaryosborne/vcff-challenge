@@ -82,7 +82,7 @@ class VCFF_Challenge {
     }
     
     protected function _Load_Context() {
-         // Retrieve the context director
+        // Retrieve the context director
         $dir = untrailingslashit( plugin_dir_path(__FILE__ ) );
         // Load each of the field shortcodes
         foreach (new DirectoryIterator($dir.'/context') as $FileInfo) { 
@@ -158,5 +158,5 @@ add_action('vcff_init',function(){
     vcff_register_library('vcff_challenge',$vcff_challenge);
 
     $vcff_challenge->Init();
+    
 });
-
