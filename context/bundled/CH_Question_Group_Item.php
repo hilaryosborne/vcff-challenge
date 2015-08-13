@@ -2,12 +2,14 @@
 
 class CH_Question_Group_Item extends CH_Group_Item {
     
-    public function Do_Closure() { 
-
-        $this->_Visibility();
+    public function On_Create() {
+        // Retrieve the form instance
+        $form_instance = $this->form_instance;
+        
+        $form_instance->Add_Action('after_review',array($this,'_Visibility'));
     }
     
-    protected function _Visibility() {
+    public function _Visibility() {
         // Retrieve the element
         $el = $this->el;
         // Retrieve the machine code of the container

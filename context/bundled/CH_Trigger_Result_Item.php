@@ -1,6 +1,6 @@
 <?php
 
-class CH_Trigger_ResultItem extends VCFF_Trigger_Item {
+class CH_Trigger_Result_Item extends VCFF_Trigger_Item {
     
     public function Render() {
         // Retrieve the context director
@@ -17,6 +17,13 @@ class CH_Trigger_ResultItem extends VCFF_Trigger_Item {
         ob_end_clean();
         // Return the contents
         return $output;
+    }
+    
+    public function Is_Compatible() {
+        
+        $form_instance = $this->form_instance;
+        
+        return $form_instance->is_challenge ? true : false ;
     }
     
     public function Check_Validation() {
