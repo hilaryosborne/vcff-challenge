@@ -1,6 +1,6 @@
 <?php
 
-class CH_Fields_Single_Choice_Item extends CH_Question_Item {
+class CH_Fields_Multiple_Choice_Item extends CH_Question_Item {
     
     public $inputs;
     
@@ -43,20 +43,29 @@ class CH_Fields_Single_Choice_Item extends CH_Question_Item {
         // Retrieve the shortcodes
         $attributes = $this->attributes;
         // Retrieve the posted value
-        $posted_value = $this->posted_value;
-        // If no posted value has been provided
-        if (!$posted_value || $this->_Is_Empty()) {
-            // Do any is locked action
-            do_action('ch_field_mark_auto',$this); return;
-        }
+        $posted_value = $this->posted_value; 
         // If the randomise option exists
         $answers = explode('|',$attributes['ch_answers']); 
         // The is correct flag
         $is_correct = false;
+        // If no posted value has been provided
+        if (!$posted_value || !is_array($posted_value) || $this->_Is_Empty()) {
+            // Do any is locked action
+            do_action('ch_field_mark_auto',$this); return;
+        }
         // Loop through each potential answer
         foreach ($answers as $k => $_answer) {
-            // If an array was provided
-            if ($posted_value == $_answer) { $is_correct = true; }
+            // If the randomise option exists
+            $answer_items = explode(',',$_answer);
+            // The all correct flag
+            $is_all_correct = true;
+            // Loop through each answer items
+            foreach ($answer_items as $__k => $_answer_item) {
+                // Set the all correct flag as false
+                if (!in_array($_answer_item,$posted_value)) { $is_all_correct = false; }
+            }
+            // If all is correct, flag as correct 
+            if ($is_all_correct) { $is_correct = true; }
         }
         // Set the correct flag
         $this->mark = $is_correct ? 'CORRECT' : 'INCORRECT';
@@ -89,6 +98,45 @@ class CH_Fields_Single_Choice_Item extends CH_Question_Item {
         ob_end_clean();
         // Return the contents
         return $output;
+    }
+    
+    public function Get_HTML_Value() {
+        // Retrieve the inputs
+        $inputs = $this->inputs;
+        // Build the HTML string
+        $html = '<div class="posted-field">';
+        $html .= '<div class="field-label"><strong>'.$this->Get_Label().'</strong></div>';
+        $html .= '<p class="field-contents">'.$this->Get_Contents().'</p>';
+        // Retrieve the shortcodes
+        foreach ($this->inputs as $k => $_input) {
+            // If the input was selected
+            if (is_array($this->posted_value) && in_array($_input['i'],$this->posted_value)) { 
+                // Indicate which option was selected
+                $html .= '<div class="field-value"><strong>&gt;&gt;&gt; ['.$_input['i'].'] '.$_input['text'].' &lt;&lt;&lt; Selected</strong></div>';
+            } // Otherwise the option was not selected
+            else { $html .= '<div class="field-value">['.$_input['i'].'] '.$_input['text'].'</div>'; }
+        }
+        // Finish the html
+        $html .= '</div>';
+        // Return the HTML
+        return $html;
+    }
+    
+    public function Get_TEXT_Value() {
+        // Build the text label
+        $text .= $this->Get_Label()."\n";
+        $text .= $this->Get_Contents()."\n\r";
+        // Retrieve the shortcodes
+        foreach ($this->inputs as $k => $_input) {
+            // If the input was selected
+            if (is_array($this->posted_value) && in_array($_input['i'],$this->posted_value)) { 
+                // Indicate which option was selected
+                $text .= '>>> ['.$_input['i'].'] '.$_input['text'].' <<< Selected'."\n";
+            } // Otherwise the option was not selected
+            else { $text .= '['.$_input['i'].'] '.$_input['text']."\n"; }
+        }
+        // Return the text
+        return $text;
     }
     
 }

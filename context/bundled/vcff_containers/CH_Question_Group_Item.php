@@ -1,19 +1,19 @@
 <?php
 
-class CH_Fields_Essay_Item extends CH_Question_Item {
+class CH_Question_Group_Item extends CH_Group_Item {
     
-    public function Form_Render($attributes,$content,$shortcode) {
+
+    public function Render($content) { 
         // Convert attrs to vars
         extract(shortcode_atts(array(
-            'field_label'=>'',
             'machine_code' => '',
-            'default_value'=>'',
-            'conditions'=>'',
-            'extra_class'=>'',
-            'css'=>'',
+            'label' => '',
+            'conditions' => '',
+            'extra_class' => '',
+            'css' => ''
         ), $this->attributes));
         // Compile the css class
-        $css_class = apply_filters(VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, vc_shortcode_custom_css_class( $css, ' ' ), $this->settings['base'], $this->attributes);
+        $css_class = apply_filters(VC_SHORTCODE_CUSTOM_CSS_FILTER_TAG, vc_shortcode_custom_css_class($css, ' '), $this->settings['base'], $atts);
         // Start gathering content
         ob_start();
         // Retrieve the context director
@@ -24,7 +24,10 @@ class CH_Fields_Essay_Item extends CH_Question_Item {
         $output = ob_get_contents();
         // Clean up
         ob_end_clean();
+        // Apply any container filters
+        $html = apply_filters('form_container_content', $output, $this );
         // Return the contents
-        return $output;
+        return $html;
     }
+    
 }

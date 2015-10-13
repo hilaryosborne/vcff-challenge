@@ -18,7 +18,7 @@ class CH_Question_Item extends VCFF_Field_Item {
     
     public $comment;
     
-    public function Do_Closure() { 
+    public function Mark() { 
         // Retrieve the form instance
         $form_instance = $this->form_instance; 
         // Retrieve the shortcodes
@@ -27,38 +27,15 @@ class CH_Question_Item extends VCFF_Field_Item {
         if ($this->Is_Auto_Mark()) { 
             // Run the automark function
             $this->_Auto_Mark();
-            // If the question was not marked correct
-            if (!$this->Is_Correct()) { 
-                // Set the field to invalid
-                $form_instance->is_valid = false;
-                // Set the field to invalid
-                $this->is_valid = false; 
-            }
         } // Otherwise if we have manual mark on  
-        else { $this->_Manual_Mark(); } //die('asdasd '.$this->mark);
-        // ASSIGN MESSAGES
-        // If the question has been marked as correct
-        if ($this->Is_Correct()) {
-            // Add the correct message
-            $this->Add_Alert($this->Get_Correct_Msg(),'success');
-        }
-        // If the question has been marked as correct
-        if ($this->Is_Incorrect()) { 
-            // Add the correct message
-            $this->Add_Alert($this->Get_Incorrect_Msg(),'danger'); 
-        }
-        // If the question has been marked as correct
-        if ($this->Get_Comment_Msg()) {
-            // Add the correct message
-            $this->Add_Alert($this->Get_Comment_Msg(),'info');
-        }
+        else { $this->_Manual_Mark(); }
         // Do any is locked action
         do_action('ch_field_mark',$this);
     }
     
     protected function _Manual_Mark() {
         // Retrieve the shortcodes
-        $this->mark == 'PENDING';
+        $this->mark = 'PENDING';
         // Do any is locked action
         do_action('ch_field_mark_manual',$this);
     }
@@ -91,6 +68,13 @@ class CH_Question_Item extends VCFF_Field_Item {
         return $this->mark ? true : false;
     }
     
+    public function Is_Empty() {
+        // Retrieve the posted value
+        $posted_value = $this->posted_value;
+        
+        return $this->_Is_Empty_Recur($posted_value);
+    }
+    
     protected function _Is_Empty() {
         // Retrieve the posted value
         $posted_value = $this->posted_value;
@@ -119,7 +103,7 @@ class CH_Question_Item extends VCFF_Field_Item {
     
     public function Is_Auto_Mark() {
         // Retrieve the shortcodes
-        $attributes = $this->attributes;
+        $attributes = $this->attributes; 
         // If we have automark enabled
         if (isset($attributes['ch_automark']) && $attributes['ch_automark'] != '') { 
             // Run the automark function

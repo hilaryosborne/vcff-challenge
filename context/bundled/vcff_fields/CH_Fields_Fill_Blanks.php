@@ -1,32 +1,14 @@
 <?php
 
-class CH_Fields_Essay {
-    
-    static $field_type = 'ch_essay_answer';
-    
-    static $field_title = 'CH - Essay Answer';
-
-    static $item_class = 'CH_Fields_Essay_Item';
-    
-    static $is_context = true;
-    
-    static function Field_Settings() {
-        // Return the required meta fields
-        return array(
-            // Add any custom pages for this form type
-            'pages' => array(),
-            // Add any custom form groups
-            'groups' => array(),
-            // Add any custom form fields
-            'fields' => array()
-        );
-    }
-
-    static function VC_Params() {
-        // Return any visual composer params
-        return array(
-            'params' => array(
-                // CORE FIELD SETTINGS
+vcff_map_field(array(
+    'type' => 'ch_fill_blanks',
+    'title' => 'CH - Fill in the Blanks',
+    'class' => 'CH_Fields_Fill_Blanks_Item',
+    'filter_logic' => array(),
+    'conditional_logic' => array(),
+    'validation_logic' => array(),
+    'vc_map' => array(
+        'params' => array(
                 array (
                     "type" => "vcff_heading",
                     "heading" => false,
@@ -40,7 +22,6 @@ class CH_Fields_Essay {
                     "heading" => __ ( "Machine Code", VCFF_FORM ),
                     "param_name" => "machine_code",
                 ),  
-                // CORE FIELD SETTINGS
                 array (
                     "type" => "vcff_heading",
                     "heading" => false,
@@ -60,20 +41,27 @@ class CH_Fields_Essay {
                     "heading" => __ ( "Label (Data Viewing)", VCFF_FORM ),
                     "param_name" => "view_label",
                 ),
-                // CORE FIELD SETTINGS
                 array (
                     "type" => "vcff_heading",
                     "heading" => false,
                     "param_name" => "question_heading",
                     'group' => __('Question',VCFF_FORM),
-                    'html_title' => 'Question Setup',
+                    'html_title' => 'Question Settings',
                     'html_description' => 'You can set this field to accept dynamic values from either POST, GET or REQUEST variables. This is useful if you have forms posting to each other or if you want to refill form fields via a URL link.',
                 ),
                 array (
                     "type" => "textarea_html",
-                    //"heading" => __ ( "What would you like the question to ask?", VCFF_FORM ),
                     'group' => __('Question',VCFF_FORM),
                     "param_name" => "content",
+                    'description' => __('To create answer inputs wrap your answers in {} characters with a | character for multiple possible answers. For example, The color of the sky is {blue|sky blue} and the color of fire is {red|fire red|hot red}')
+                ),
+                array (
+                    "type" => "vcff_heading",
+                    "heading" => false,
+                    "param_name" => "ch_heading_3",
+                    'group' => __('Question',VCFF_FORM),
+                    'html_title' => 'Question Points',
+                    'html_description' => 'You can set this field to accept dynamic values from either POST, GET or REQUEST variables. This is useful if you have forms posting to each other or if you want to refill form fields via a URL link.',
                 ),
                 array (
                     "type" => "textfield",
@@ -84,39 +72,46 @@ class CH_Fields_Essay {
                 array (
                     "type" => "vcff_heading",
                     "heading" => false,
+                    "param_name" => "ch_options_heading",
+                    'group' => __('Question',VCFF_FORM),
+                    'html_title' => 'Question Marking',
+                    'html_description' => 'You can set this field to accept dynamic values from either POST, GET or REQUEST variables. This is useful if you have forms posting to each other or if you want to refill form fields via a URL link.',
+                ),
+                array(
+                    "type" => "checkbox",
+                    "param_name" => "ch_automark",
+                    'value' => array(
+                        'Automatically mark this question' => 'yes'
+                    ),
+                    'group' => __('Question',VCFF_FORM),
+                ),
+                array (
+                    "type" => "vcff_heading",
+                    "heading" => false,
                     "param_name" => "ch_message_heading",
                     'group' => __('Question',VCFF_FORM),
-                    'html_title' => 'Question Messages',
+                    'html_title' => 'Marking Messages',
                     'html_description' => 'You can set this field to accept dynamic values from either POST, GET or REQUEST variables. This is useful if you have forms posting to each other or if you want to refill form fields via a URL link.',
                 ),
                 array (
                     "type" => "textarea_raw_html",
-                    "heading" => __ ( "Correct Message", VCFF_FORM ),
+                    "heading" => __ ( "Show the following message for a correct answer", VCFF_FORM ),
                     'group' => __('Question',VCFF_FORM),
                     "param_name" => "ch_correct_msg",
                 ),
                 array (
                     "type" => "textarea_raw_html",
-                    "heading" => __ ( "Incorrect Message", VCFF_FORM ),
+                    "heading" => __ ( "Show the following message for an incorrect answer", VCFF_FORM ),
                     'group' => __('Question',VCFF_FORM),
                     "param_name" => "ch_incorrect_msg",
                 ),
-                
-                // VC CSS EDITOR
                 array(
                     'type' => 'css_editor',
                     'heading' => __('CSS',VCFF_FORM),
                     'param_name' => 'css',
                     'group' => __('Design Options',VCFF_FORM),
-                ),
-            )
-        );
-    }
-    
-    static function Field_Params() {
-        // Return any field params
-        return array();
-    }
-}
+                )
+        )
+    )
+));
 
-vcff_map_field('CH_Fields_Essay');

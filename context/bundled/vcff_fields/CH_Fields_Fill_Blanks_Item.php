@@ -102,4 +102,44 @@ class CH_Fields_Fill_Blanks_Item extends CH_Question_Item {
         return $output;
     }
     
+    public function Get_HTML_Value() {
+        // Retrieve the blanks
+        $blanks = $this->blanks;
+        // If there are no blanks, return out
+        if (!$blanks || !is_array($blanks)) { return; }
+        // Retrieve the html contents
+        $contents = $this->Get_Contents();
+        // Loop through each blank
+        foreach ($blanks as $k => $_blank) {
+            // Refine the contents html string
+            $contents = str_replace($_blank['el']->raw,'<strong>&gt;&gt;&gt; '.$_blank['value'].' &lt;&lt;&lt;</strong>',$contents);
+        }
+        // Build the HTML string
+        $html = '<div class="posted-field">';
+        $html .= '<div class="field-label"><strong>'.$this->Get_Label().'</strong></div>';
+        $html .= '<p class="field-contents">'.$contents.'</p>';
+        $html .= '</div>';
+        
+        return $html;
+    }
+    
+    public function Get_TEXT_Value() {
+        // Retrieve the blanks
+        $blanks = $this->blanks;
+        // If there are no blanks, return out
+        if (!$blanks || !is_array($blanks)) { return; }
+        // Retrieve the html contents
+        $contents = $this->Get_Contents();
+        // Loop through each blank
+        foreach ($blanks as $k => $_blank) {
+            // Refine the contents html string
+            $contents = str_replace($_blank['el']->raw,'>>>'.$_blank['value'].' <<<',$contents);
+        }
+        // Build the TEXT strin
+        $text .= $this->Get_Label()."\n";
+        $text .= strip_tags($contents)."\n\r";
+        // Return the text string
+        return $text;
+    }
+    
 }

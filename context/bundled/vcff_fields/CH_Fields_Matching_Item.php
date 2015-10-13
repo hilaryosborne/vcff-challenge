@@ -107,4 +107,35 @@ class CH_Fields_Matching_Item extends CH_Question_Item {
         return $output;
     }
     
+    public function Get_HTML_Value() {
+        // Retrieve the inputs
+        $inputs = $this->inputs;
+        // Build the HTML string
+        $html = '<div class="posted-field">';
+        $html .= '<div class="field-label"><strong>'.$this->Get_Label().'</strong></div>';
+        $html .= '<p class="field-contents">'.$this->Get_Contents().'</p>';
+        // Retrieve the shortcodes
+        foreach ($this->inputs as $k => $_input) {
+            // Indicate which option was selected
+            $html .= '<div class="field-value"><strong>'.$_input['left'].'</strong> answered with <strong>&gt;&gt;&gt; '.$this->posted_value[$_input['i']].' &lt;&lt;&lt; Selected</strong></div>';
+        }
+        // Finish the html
+        $html .= '</div>';
+        // Return the HTML
+        return $html;
+    }
+    
+    public function Get_TEXT_Value() {
+        // Build the text label
+        $text .= $this->Get_Label()."\n";
+        $text .= $this->Get_Contents()."\n\r";
+        // Retrieve the shortcodes
+        foreach ($this->inputs as $k => $_input) {
+            // Indicate which option was selected
+            $text .= ''.$_input['left'].' answered with >>> '.$this->posted_value[$_input['i']].' <<< Selected'."\n";
+        }
+        // Return the text
+        return $text;
+    }
+    
 }

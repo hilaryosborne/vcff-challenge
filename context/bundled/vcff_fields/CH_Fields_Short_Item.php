@@ -27,4 +27,25 @@ class CH_Fields_Short_Item extends CH_Question_Item {
         // Return the contents
         return $output;
     }
+    
+    public function Get_HTML_Value() {
+
+        $html = '<div class="posted-field">';
+        $html .= '<div class="field-label"><strong>'.$this->Get_Label().'</strong></div>';
+        $html .= '<p class="field-contents">'.$this->Get_Contents().'</p>';
+        $html .= '<div class="field-value">'.$this->Get_Value().'</div>';
+        $html .= '</div>';
+        
+        return $html;
+    }
+    
+    public function Get_TEXT_Value() {
+        
+        $text .= $this->Get_Label()."\n";
+        $text .= $this->Get_Contents()."\n\r";
+        $text .= $this->Get_Value()."\n";
+        
+        return $text;
+    }
+    
 }
